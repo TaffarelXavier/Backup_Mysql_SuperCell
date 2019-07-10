@@ -1,4 +1,0 @@
-"# Backup_Mysql_SuperCell" 
-
-CRIADOR DE BACKUP USANDO JAVA E NODE
-

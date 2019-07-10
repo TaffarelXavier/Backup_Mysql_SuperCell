@@ -1,9 +1,6 @@
 package backup;
 
 import java.io.*;
-import javax.swing.*;
-import java.awt.event.*;
-import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -18,8 +15,8 @@ public class Backup {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-          Date date = new Date();
-        
+        Date date = new Date();
+
         System.out.println(AppendFile._getPathDefult64("backup_mysql"));
 
         File pasta = new File(AppendFile._getPathDefult64("backup_mysql"));
@@ -53,8 +50,14 @@ public class Backup {
             //Define o arquivo de configurações:
             AppendFile.setFileNameWithFolder(AppendFile._getPathDefult64("backup_mysql") + "\\configuracoes.txt");
 
+            String host = AppendFile.getValueByKeyName("hostname");
+            String username = AppendFile.getValueByKeyName("username");
+            String password = AppendFile.getValueByKeyName("password");
+            String dbname = AppendFile.getValueByKeyName("dbname");
+
             ProcessBuilder builder = new ProcessBuilder(
-                    "cmd.exe", "/c", "mysqldump -hlocalhost -uroot -pchkdsk super_cell > " + AppendFile.getValueByKeyName("salvar") + "\\backup_" + sdf.format(date) + ".sql");
+                    "cmd.exe", "/c", "mysqldump -h" + host + " -u" + username
+                    + " -p" + password + " " + dbname + " > " + AppendFile.getValueByKeyName("salvar") + "\\backup_" + dbname + "_" + sdf.format(date) + ".sql");
             builder.redirectErrorStream(true);
             Process p = builder.start();
             BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
